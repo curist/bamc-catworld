@@ -1,27 +1,24 @@
 import Bamc from 'bamc-core'
+import { Terminal } from 'xterm'
 
 const debug = require('debug')('bamc-cw:App')
 
 import {h, Component} from 'preact'
 
 export default class App extends Component {
-  constructor() {
-    super()
+  componentDidMount() {
+    const term = new Terminal()
+    term.open(this.container)
+
     const url = 'wss://cw2.twmuds.com/websocket/v1939'
     const bamc = this.bamc = Bamc(url)
-    bamc.on('line', l => debug(l))
-    bamc.on('iac:sub:gmcp', buffer => debug(buffer))
+    bamc.on('line', l => term.write(l + '\n'))
+    bamc.on('iac:sub:gmcp', buffer => debug(buffer.toString()))
   }
+
   render() {
     return <div>
-      <div>
-        <h2>
-          Welcome to preact
-        </h2>
-      </div>
-      <div>
-        <p>Edit <code>src/components/App.js</code> and save to hot reload your changes.</p>
-      </div>
+      <div ref={ref => this.container = ref} />
     </div>
   }
 }

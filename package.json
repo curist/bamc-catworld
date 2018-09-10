@@ -14,7 +14,8 @@
     "bamc-core": "^0.1.4",
     "debug": "^3.1.0",
     "preact": "^8.3.1",
-    "preact-compat": "^3.18.4"
+    "preact-compat": "^3.18.4",
+    "xterm": "^3.7.0"
   },
   "devDependencies": {
     "nwb": "0.21.x"
