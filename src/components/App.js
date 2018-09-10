@@ -10,7 +10,10 @@ import {h, Component} from 'preact'
 import css from './App.css'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-const defer = async task => task()
+const defer = async task => {
+  await delay(10)
+  return task()
+}
 
 const MAX_LINES = 2000
 
