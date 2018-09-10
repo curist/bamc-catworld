@@ -1,9 +1,11 @@
 import './App.css'
+import bamc from 'bamc-core'
 
 import {h, Component} from 'preact'
 
 export default class App extends Component {
   render() {
+    console.log(bamc)
     return <div className="App">
       <div className="App-heading App-flex">
         <h2>

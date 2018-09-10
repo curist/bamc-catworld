@@ -1,5 +1,4 @@
-import './index.css'
-import bamc from 'bamc-core'
+import 'src/index.css'
 
 import {h, render} from 'preact'
 
@@ -10,8 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 
 let root
 function init() {
-  let App = require('./App').default
-  console.log(bamc)
+  let App = require('src/App').default
   root = render(<App/>, document.querySelector('#app'), root)
 }
 
