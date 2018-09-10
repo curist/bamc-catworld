@@ -1,19 +1,16 @@
 import Bamc from 'bamc-core'
 import autobind from 'autobind-decorator'
 import ConvertAnsi from 'ansi-to-html'
-
-import css from './App.css'
-
+const ansi = new ConvertAnsi()
 const debug = require('debug')('bamc-cw:App')
 
 import {h, Component} from 'preact'
 
+import css from './App.css'
+
 @autobind
 export default class App extends Component {
-
   componentDidMount() {
-    const ansi = new ConvertAnsi()
-
     const url = 'wss://cw2.twmuds.com/websocket/v1939'
     const bamc = this.bamc = Bamc(url)
     bamc.on('line', l => {
