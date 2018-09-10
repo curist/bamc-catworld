@@ -15,7 +15,7 @@ const defer = async task => {
   return task()
 }
 
-const MAX_LINES = 2000
+const MAX_LINES = 600
 
 // done/done@cw2 wss://cw2.twmuds.com/websocket/v1939
 // alright/alright@cat wss://catworld.muds.tw/websocket/v1939
@@ -52,7 +52,7 @@ export default class App extends Component {
     bamc.on('iac:sub:gmcp', async buffer => debug(buffer.toString()))
   }
 
-  handleCommand(e) {
+  async handleCommand(e) {
     e.preventDefault()
     const { commandHistory, prevCommand } = this.state
     const cmd = this.inputRef.value || ' '
@@ -79,7 +79,7 @@ export default class App extends Component {
     })
   }
 
-  handleSpecialKeys(e) {
+  async handleSpecialKeys(e) {
     const { commandHistory, commandHistoryIndex } = this.state
     const maxIndex = commandHistory.length - 1
     const i = commandHistoryIndex == null
