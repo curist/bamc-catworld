@@ -1,3 +1,4 @@
-# bamc-catworld
+# BAMC Catworld
 
-Describe bamc-catworld here.
+Barely a [cat world](https://catworld.muds.tw/) mud client.
+
