@@ -5,6 +5,7 @@ import {h, render} from 'preact'
 if (process.env.NODE_ENV === 'development') {
   // Enable use of React Developer Tools
   require('preact/devtools')
+  console.log(`localStorage.debug: ${localStorage.debug}`)
 }
 
 let root
