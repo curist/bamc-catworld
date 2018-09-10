@@ -1,6 +1,7 @@
 import Bamc from 'bamc-core'
 import autobind from 'autobind-decorator'
 import ConvertAnsi from 'ansi-to-html'
+import keycode from 'keycode'
 const ansi = new ConvertAnsi()
 const debug = require('debug')('bamc-cw:App')
 
@@ -9,8 +10,9 @@ import {h, Component} from 'preact'
 import css from './App.css'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const defer = async task => task()
 
-const MAX_LINES = 5000
+const MAX_LINES = 2000
 
 // done/done@cw2 wss://cw2.twmuds.com/websocket/v1939
 // alright/alright@cat wss://catworld.muds.tw/websocket/v1939
@@ -19,11 +21,13 @@ export default class App extends Component {
   state = {
     lineIndex: 0,
     lines: [],
+    commandHistory: [],
+    commandHistoryIndex: null,
     prevCommand: null,
   }
   componentDidMount() {
-    const url = 'wss://cw2.twmuds.com/websocket/v1939'
-    // const url = 'wss://catworld.muds.tw/websocket/v1939'
+    // const url = 'wss://cw2.twmuds.com/websocket/v1939'
+    const url = 'wss://catworld.muds.tw/websocket/v1939'
     const bamc = this.bamc = Bamc(url)
     const container = this.container
     bamc.on('line', async l => {
@@ -34,7 +38,10 @@ export default class App extends Component {
         content: ansi.toHtml(l),
       }]).slice(-1 * MAX_LINES)
 
-      this.setState({ lineIndex, lines })
+      this.setState({
+        lines,
+        lineIndex,
+      })
 
       await delay(0)
       container.scrollTop = container.scrollHeight
@@ -42,23 +49,63 @@ export default class App extends Component {
     bamc.on('iac:sub:gmcp', async buffer => debug(buffer.toString()))
   }
 
-  submit(e) {
+  handleCommand(e) {
     e.preventDefault()
-    const { prevCommand } = this.state
-    const value = this.inputRef.value || ' '
-    if(/^:/.test(value)) {
-      this.bamc.emit('action', { type: 'cmd', message: value.slice(1) })
+    const { commandHistory, prevCommand } = this.state
+    const cmd = this.inputRef.value || ' '
+
+    // focus input after command sent
+    defer(() => this.inputRef.select())
+
+    if(/^:/.test(cmd)) {
+      this.bamc.emit('action', { type: 'cmd', message: cmd.slice(1) })
       this.inputRef.value = prevCommand || ''
-    } else {
-      this.bamc.emit('action', { type: 'send', message: value })
-      this.setState({ prevCommand: value })
+      return
     }
 
-    this.inputRef.select()
+    this.bamc.emit('action', { type: 'send', message: cmd })
+
+    if(cmd == prevCommand) {
+      return
+    }
+
+    this.setState({
+      commandHistoryIndex: commandHistory.length,
+      commandHistory: commandHistory.concat([cmd]).slice(-50),
+      prevCommand: cmd,
+    })
   }
 
-  render() {
-    const { lines } = this.state
+  handleSpecialKeys(e) {
+    const { commandHistory, commandHistoryIndex } = this.state
+    const maxIndex = commandHistory.length - 1
+    const i = commandHistoryIndex == null
+      ? maxIndex :  commandHistoryIndex
+
+    switch(keycode(e)) {
+      case 'up': {
+        const nextCmdHistoryIndex = Math.max(0, i - 1)
+        const cmd = commandHistory[nextCmdHistoryIndex]
+        this.inputRef.value = cmd
+        this.inputRef.select()
+        this.setState({ commandHistoryIndex: nextCmdHistoryIndex })
+        break
+      }
+      case 'down': {
+        const nextCmdHistoryIndex = Math.min(maxIndex, i + 1)
+        const cmd = commandHistory[nextCmdHistoryIndex]
+        this.inputRef.value = cmd
+        this.inputRef.select()
+        this.setState({ commandHistoryIndex: nextCmdHistoryIndex })
+        break
+      }
+      default: {
+
+      }
+    }
+  }
+
+  render({}, { lines }) {
     return <div className={css.App}>
       <pre className={css.term} ref={ref => this.container = ref}>
         {
@@ -67,8 +114,9 @@ export default class App extends Component {
           />)
         }
       </pre>
-      <form onsubmit={this.submit}>
+      <form onsubmit={this.handleCommand}>
         <input className={css.input} ref={ref => this.inputRef = ref}
+          onKeyUp={this.handleSpecialKeys}
           spellcheck={false} autofocus={true} />
       </form>
     </div>
