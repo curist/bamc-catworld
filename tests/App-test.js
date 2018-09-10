@@ -1,7 +1,7 @@
 import expect from 'expect'
 import {h, render} from 'preact'
 
-import App from 'src/App'
+import App from 'src/components/App'
 
 describe('App component', () => {
   let node

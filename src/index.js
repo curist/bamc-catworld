@@ -9,12 +9,12 @@ if (process.env.NODE_ENV === 'development') {
 
 let root
 function init() {
-  let App = require('src/App').default
+  let App = require('src/components/App').default
   root = render(<App/>, document.querySelector('#app'), root)
 }
 
 if (module.hot) {
-  module.hot.accept('./App', init)
+  module.hot.accept('./components/App', init)
 }
 
 init()
