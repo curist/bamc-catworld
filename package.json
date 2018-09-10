@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bamc-core": "^0.1.4",
+    "debug": "^3.1.0",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4"
   },
