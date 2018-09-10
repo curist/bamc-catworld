@@ -11,7 +11,7 @@ import css from './App.css'
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const defer = async task => {
-  await delay(10)
+  await delay(0)
   return task()
 }
 
@@ -112,8 +112,8 @@ export default class App extends Component {
     return <div className={css.App}>
       <pre className={css.term} ref={ref => this.container = ref}>
         {
-          lines.map(({index, content}) => <div
-            key={index} dangerouslySetInnerHTML={{__html: content}}
+          lines.map(({index, content}) => <div key={index}
+            dangerouslySetInnerHTML={{__html: content}}
           />)
         }
       </pre>

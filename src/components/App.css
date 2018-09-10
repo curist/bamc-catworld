@@ -13,6 +13,7 @@
     margin: 0;
     padding: 15px;
     overflow: auto;
+    white-space: pre-wrap;
 }
 
 :local .input {
