@@ -1,0 +1,21 @@
+:local .App {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 3px dashed #ccc;
+}
+
+:local .term {
+    flex: 1;
+    font-family: en,sym,zh;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 15px;
+    overflow: auto;
+}
+
+:local .input {
+    height: 32px;
+    padding: 2px 5px;
+}

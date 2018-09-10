@@ -1,5 +1,4 @@
 import 'src/index.css'
-import 'xterm/dist/xterm.css'
 
 import {h, render} from 'preact'
 
