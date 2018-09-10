@@ -1,10 +1,16 @@
-import bamc from 'bamc-core'
+import Bamc from 'bamc-core'
 
 import {h, Component} from 'preact'
 
 export default class App extends Component {
+  constructor() {
+    super()
+    const url = 'wss://cw2.twmuds.com/websocket/v1939'
+    const bamc = this.bamc = Bamc(url)
+    bamc.on('line', l => console.log(l))
+    bamc.on('iac:sub:gmcp', buffer => console.log(buffer))
+  }
   render() {
-    console.log(bamc)
     return <div>
       <div>
         <h2>
