@@ -2,12 +2,12 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    border: 3px dashed #ccc;
+    padding: 8px;
 }
 
 :local .term {
     flex: 1;
-    font-family: en,sym,zh;
+    font-family: BAMC;
     background-color: black;
     color: white;
     margin: 0;
@@ -16,6 +16,9 @@
 }
 
 :local .input {
-    height: 32px;
-    padding: 2px 5px;
+    padding: 6px 8px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    margin-top: 8px;
 }

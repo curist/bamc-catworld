@@ -11,16 +11,16 @@ body {
 }
 
 @font-face {
-    font-family: en;
+    font-family: BAMC;
     src: url('./assets/Inconsolata.woff');
 }
 @font-face {
-    font-family: sym;
+    font-family: BAMC;
     src: local("Lantinghei TC"), local("MingLiU_HKSCS");
     unicode-range: U+100-4DFF,U+A000-10FFFF;
 }
 @font-face{
-    font-family: zh;
+    font-family: BAMC;
     src: local("Lantinghei TC"), local("MingLiU_HKSCS");
 }
 

@@ -1,4 +1,5 @@
 import Bamc from 'bamc-core'
+import autobind from 'autobind-decorator'
 import ConvertAnsi from 'ansi-to-html'
 
 import css from './App.css'
@@ -7,7 +8,9 @@ const debug = require('debug')('bamc-cw:App')
 
 import {h, Component} from 'preact'
 
+@autobind
 export default class App extends Component {
+
   componentDidMount() {
     const ansi = new ConvertAnsi()
 
@@ -20,11 +23,23 @@ export default class App extends Component {
     bamc.on('iac:sub:gmcp', buffer => debug(buffer.toString()))
   }
 
+  submit(e) {
+    e.preventDefault()
+    const value = this.inputRef.value
+    this.bamc.emit('action', {
+      type: 'send',
+      message: value,
+    })
+    this.inputRef.select()
+  }
+
   render() {
     return <div className={css.App}>
-      <pre className={css.term}
-        ref={ref => this.container = ref} />
-      <input className={css.input} />
+      <pre className={css.term} ref={ref => this.container = ref} />
+      <form onsubmit={this.submit}>
+        <input className={css.input} ref={ref => this.inputRef = ref}
+          spellcheck={false} />
+      </form>
     </div>
   }
 }

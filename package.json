@@ -5,13 +5,11 @@
   "scripts": {
     "build": "nwb build-preact-app",
     "clean": "nwb clean-app",
-    "start": "nwb serve-preact-app",
-    "test": "nwb test-preact",
-    "test:coverage": "nwb test-preact --coverage",
-    "test:watch": "nwb test-preact --server"
+    "start": "nwb serve-preact-app"
   },
   "dependencies": {
     "ansi-to-html": "^0.6.6",
+    "autobind-decorator": "^2.1.0",
     "bamc-core": "^0.1.4",
     "debug": "^3.1.0",
     "preact": "^8.3.1",
