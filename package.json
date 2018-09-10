@@ -1,8 +1,7 @@
 {
   "name": "bamc-catworld",
-  "version": "1.0.0",
-  "description": "Describe bamc-catworld here",
-  "private": true,
+  "version": "0.1.0",
+  "description": "barely a cat world mud client",
   "scripts": {
     "build": "nwb build-preact-app",
     "clean": "nwb clean-app",
@@ -12,13 +11,14 @@
     "test:watch": "nwb test-preact --server"
   },
   "dependencies": {
+    "bamc-core": "^0.1.3",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4"
   },
   "devDependencies": {
     "nwb": "0.21.x"
   },
-  "author": "",
+  "author": "curist",
   "license": "MIT",
-  "repository": ""
+  "repository": "git@github.com:curist/bamc-catworld.git"
 }
